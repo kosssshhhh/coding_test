@@ -1,15 +1,12 @@
+// 내 풀이
 function solution(food) {
   var answer = '';
   let result1 = [];
   let result2 = [];
 
-  for (let i = 0; i < food.length; i++) {
-    if (i === 0) {
-      console.log('i===0');
-    } else {
-      for (let j = 0; j < Math.floor(food[i] / 2); j++) {
-        result1.push(i);
-      }
+  for (let i = 1; i < food.length; i++) {
+    for (let j = 0; j < Math.floor(food[i] / 2); j++) {
+      result1.push(i);
     }
   }
 
@@ -19,3 +16,14 @@ function solution(food) {
 
   return answer;
 }
+
+// 참고 풀이
+// function solution(food) {
+//   let res = '';
+
+//   for (let i = 1; i < food.length; i++) {
+//     res += String(i).repeat(Math.floor(food[i] / 2));
+//   }
+
+//   return res + '0' + [...res].reverse().join('');
+// }
