@@ -3,18 +3,11 @@ function solution(name, yearning, photo) {
   const result = [];
   let sum = 0;
 
-  for (let i = 0; i < name.length; i++) {
-    obj[name[i]] = yearning[i];
-  }
+  name.forEach((a, i) => (obj[a] = yearning[i]));
 
   photo.forEach((array, _) => {
     sum = 0;
-
-    array.forEach((a, i) => {
-      if (obj[a]) {
-        sum += obj[a];
-      }
-    });
+    array.forEach((a) => (obj[a] ? (sum += obj[a]) : 0));
     result.push(sum);
   });
 
