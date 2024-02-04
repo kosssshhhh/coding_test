@@ -29,9 +29,7 @@ function solution(park, routes) {
         //오른쪽
         if (
           route[0] + 1 < 0 ||
-          route[1] < 0 ||
           route[0] + 1 > park[0].length - 1 ||
-          route[1] > park.length - 1 ||
           park[route[1]][route[0] + 1] === 'X'
         ) {
           route = [...my_routes];
@@ -42,9 +40,7 @@ function solution(park, routes) {
       } else if (routes[i][0] === 'S') {
         //아래
         if (
-          route[0] < 0 ||
           route[1] + 1 < 0 ||
-          route[0] > park[0].length - 1 ||
           route[1] + 1 > park.length - 1 ||
           park[route[1] + 1][route[0]] === 'X'
         ) {
@@ -57,9 +53,7 @@ function solution(park, routes) {
         //왼쪽
         if (
           route[0] - 1 < 0 ||
-          route[1] < 0 ||
           route[0] - 1 > park[0].length - 1 ||
-          route[1] > park.length - 1 ||
           park[route[1]][route[0] - 1] === 'X'
         ) {
           route = [...my_routes];
@@ -70,9 +64,7 @@ function solution(park, routes) {
       } else if (routes[i][0] === 'N') {
         //위
         if (
-          route[0] < 0 ||
           route[1] - 1 < 0 ||
-          route[0] > park[0].length - 1 ||
           route[1] - 1 > park.length - 1 ||
           park[route[1] - 1][route[0]] === 'X'
         ) {
