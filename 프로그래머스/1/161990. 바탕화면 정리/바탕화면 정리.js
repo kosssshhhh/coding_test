@@ -1,7 +1,7 @@
 function solution(wallpaper) {
-  var answer = [];
-  var [lux, luy] = [wallpaper.length, wallpaper[0].length];
-  var [rdx, rdy] = [1, 1];
+  let answer = [];
+  let [lux, luy] = [wallpaper.length, wallpaper[0].length];
+  let [rdx, rdy] = [1, 1];
 
 
   wallpaper.forEach((a, i) => {
