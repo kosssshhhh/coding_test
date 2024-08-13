@@ -2,18 +2,16 @@
 using namespace std;
 
 string s;
-int arr[26];
-int n = 0;
+int cnt[26];
 
 int main() {
   cin >> s;
 
   for (int i = 0; i < s.length(); i++) {
-    n = s[i] - 'a';
-    arr[n]++;
+    cnt[s[i] - 'a']++;
   }
 
-  for (int i : arr) cout << i << ' ';
+  for (int i : cnt) cout << i << ' ';
 
   return 0;
 }
