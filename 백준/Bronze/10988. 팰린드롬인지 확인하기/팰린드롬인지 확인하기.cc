@@ -1,13 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string s;
+string s, temp;
 
 int main() {
   cin >> s;
 
-  string temp = s;
-
+  temp = s;
   reverse(s.begin(), s.end());
 
   if (s == temp)
