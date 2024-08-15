@@ -9,7 +9,7 @@ int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(NULL);
   cout.tie(NULL);
-  
+
   cin >> N >> M;
   for (int i = 0; i < N; i++) {
     cin >> temp;
@@ -27,3 +27,10 @@ int main() {
   }
   return 0;
 }
+
+// string -> int
+// int -> string 구조일 떄 
+// 하나의 자료구조로 처리하면 시간이 너무 오래걸림
+// 따라서 각각 빠른 자료구조를 선택하여 사용할 수 있다.
+// string -> int : Map 사용
+// int -> string : Array 혹은 Map 사용
