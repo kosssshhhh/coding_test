@@ -1,49 +1,36 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string input, r;
-map<char, int> mp;
-int odd_cnt = 0;
-vector<char> ret;
+string s, ret;
+char mid;
+int cnt[200], flag;
 
 int main() {
-  cin >> input;
+  ios_base::sync_with_stdio(false);
+  cin.tie(NULL);
+  cout.tie(NULL);
 
-  for (char c : input) {
-    mp[c]++;
-  }
-
-  // 홀수 개수 판별 로직
-  for (auto i : mp) {
-    if (i.second % 2 == 1) {
-      odd_cnt++;
-
-      if (odd_cnt >= 2) {
-        cout << "I'm Sorry Hansoo" << '\n';
-        return 0;
+  cin >> s;
+  for (char a : s) cnt[a]++;
+  for (int i = 'Z'; i >= 'A'; i--) {
+    if (cnt[i]) {
+      if (cnt[i] & 1) {
+        mid = char(i);
+        flag++;
+        cnt[i]--;
       }
-
-      ret.push_back(i.first);
-      mp[i.first]--;
+      if (flag == 2) break;
+      for (int j = 0; j < cnt[i]; j += 2) {
+        ret = char(i) + ret;
+        ret += char(i);
+      }
     }
   }
-
-  // Map 거꾸로 순회하여 오름차순, ret 배열의 앞 뒤로 삽입.
-  for (auto it = mp.rbegin(); it != mp.rend(); it++) {
-    while ((*it).second > 1) {
-      ret.push_back((*it).first);
-      ret.insert(ret.begin(), (*it).first);
-      (*it).second -= 2;
-    }
-  }
-
-  for (auto it : ret) {
-    cout << it;
-  }
-  cout << '\n';
+  if (mid) ret.insert(ret.begin() + ret.size() / 2, mid);
+  if (flag == 2)
+    cout << "I'm Sorry Hansoo\n";
+  else
+    cout << ret << "\n";
 
   return 0;
 }
-
-// Map을 활용하여 풀이
-// cnt 배열을 활용해서 풀 수도 있음
