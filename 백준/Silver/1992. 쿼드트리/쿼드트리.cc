@@ -1,43 +1,46 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, sx, sy, ex, ey;
-int a[68][68];
+int n;
+string s;
+char a[101][101];
 
-void Recursion(int sy, int sx, int ey, int ex) {
-  int init = a[sy][sx];
-  bool flag = true;
+string quard(int y, int x, int size) {
+  if (size == 1) return string(1, a[y][x]);
+  char b = a[y][x];
+  string ret = "";
 
-  for (int i = sy; i < ey; i++) {
-    for (int j = sx; j < ex; j++) {
-      if (init != a[i][j]) flag = false;
+  for (int i = y; i < y + size; i++) {
+    for (int j = x; j < x + size; j++) {
+      if (b != a[i][j]) {
+        ret += '(';
+        ret += quard(y, x, size / 2);
+        ret += quard(y, x + size / 2, size / 2);
+        ret += quard(y + size / 2, x, size / 2);
+        ret += quard(y + size / 2, x + size / 2, size / 2);
+        ret += ')';
+        return ret;
+      }
     }
   }
-  if (flag) {
-    cout << init;
-    return;
-  } else {
-    cout << '(';
-    int my = (sy + ey) / 2;
-    int mx = (sx + ex) / 2;
-    Recursion(sy, sx, my, mx);
-    Recursion(sy, mx, my, ex);
-    Recursion(my, sx, ey, mx);
-    Recursion(my, mx, ey, ex);
-    cout << ')';
-  }
+  return string(1, a[y][x]);
 }
 
 int main() {
   cin >> n;
-
   for (int i = 0; i < n; i++) {
+    cin >> s;
     for (int j = 0; j < n; j++) {
-      scanf("%1d", &a[i][j]);
+      a[i][j] = s[j];
     }
   }
 
-  Recursion(0, 0, n, n);
+  cout << quard(0, 0, n) << '\n';
 
   return 0;
 }
+
+// 분할 정복 문제
+// 문제를 여러개의 작은 문제로 쪼개어 해결
+// 재귀 or Stack으로 해결 가능
+// 나는 네개의 좌표를 전달하여 풀었지만, 위와 같이 size를 통해 푸는 것이 좀 더 좋아보임
