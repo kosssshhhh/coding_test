@@ -7,11 +7,6 @@ int a[68][68];
 void Recursion(int sy, int sx, int ey, int ex) {
   int init = a[sy][sx];
   bool flag = true;
-  if (ey <= 0 || ex <= 0 || sy >= n || sx >= n) return;
-  if (sy < 0 || sx < 0 || ey > n || ex > n) return;
-
-  // cout << "sy : " << sy << " sx : " << sx << " ey : " << ey << " ex : " << ex
-  //      << '\n';
 
   for (int i = sy; i < ey; i++) {
     for (int j = sx; j < ex; j++) {
@@ -42,8 +37,7 @@ int main() {
     }
   }
 
-  // cout << '(';
   Recursion(0, 0, n, n);
-  // cout << ')';
+
   return 0;
 }
