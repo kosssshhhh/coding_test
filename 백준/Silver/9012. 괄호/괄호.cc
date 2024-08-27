@@ -1,34 +1,29 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int t;
-string temp;
-vector<string> v;
-stack<char> st;
+int n;
+string s;
+
+bool check(string s) {
+  stack<char> stk;
+  for (char c : s) {
+    if (c == '(')
+      stk.push(c);
+    else {
+      if (!stk.empty())
+        stk.pop();
+      else
+        return false;
+    }
+  }
+  return stk.empty();
+}
 
 int main() {
-  cin >> t;
-
-  for (int i = 0; i < t; i++) {
-    cin >> temp;
-    v.push_back(temp);
-  }
-
-  for (string s : v) {
-    while (!st.empty()) st.pop();
-
-    for (int j = 0; j < s.length(); j++) {
-      if (st.empty()) {
-        st.push(s[j]);
-      } else {
-        if (st.top() == '(' && s[j] == ')') {
-          st.pop();
-        } else {
-          st.push(s[j]);
-        }
-      }
-    }
-    if (st.empty())
+  cin >> n;
+  for (int i = 0; i < n; i++) {
+    cin >> s;
+    if (check(s))
       cout << "YES\n";
     else
       cout << "NO\n";
@@ -36,3 +31,6 @@ int main() {
 
   return 0;
 }
+
+// Stack은 {짝짓기, 폭발, 아름다운 괄호} 키워드 기억
+// 중첩 반복문에서 i j 잘 구분해서 작성하기
