@@ -26,12 +26,10 @@ void bfs(int y, int x) {
       visited[ny][nx] = visited[y][x] + 1;
 
       mx = max(mx, visited[ny][nx]);
-      // cout << mx << ' ';
+
       q.push({ny, nx});
     }
   }
-  // cout << '\n';
-  // cout << "mx : " << mx << '\n';
 }
 
 int main() {
@@ -50,7 +48,6 @@ int main() {
         q.pop();
       }
       if (a[i][j] == 'L') {
-        // cout << i << " : " << j << '\n';
         bfs(i, j);
         ret = max(mx, ret);
       };
@@ -59,3 +56,7 @@ int main() {
   cout << ret - 1;
   return 0;
 }
+
+// 모든 지점에서 최단 거리 구하기, BFS
+// BFS의 처음 지점 1로 바꿔주지 않아서 55% 지점에서 실패
+// 따라서 첫 지점을 방문했을때 1로 초기화 해준 후, 결과 ret에서 -1 하는 방식
