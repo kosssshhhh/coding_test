@@ -12,19 +12,19 @@ int main() {
   visited[n] = 1;
 
   while (q.size()) {
-    int a = q.front();
-    // cout << a << '\n';
+    int here = q.front();
+    // cout << here << '\n';
     q.pop();
-    if (a == k) {
-      v.push_back(visited[a]);
+    if (here == k) {
+      v.push_back(visited[here]);
       cnt++;
       continue;
     }
 
-    for (int next : {a - 1, a + 1, a * 2}) {
+    for (int next : {here - 1, here + 1, here * 2}) {
       if ((next >= 0 && next <= 100000) &&
-          (visited[next] == 0 || visited[next] == visited[a] + 1)) {
-        visited[next] = visited[a] + 1;
+          (visited[next] == 0 || visited[next] == visited[here] + 1)) {
+        visited[next] = visited[here] + 1;
         q.push(next);
       }
     }
