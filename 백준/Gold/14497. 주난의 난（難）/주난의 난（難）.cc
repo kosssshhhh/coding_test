@@ -8,7 +8,6 @@ bool ok = true;
 int n, m, x1, y1, x2, y2, y, x, cnt = 1, visited[304][304];
 char a[304][304];
 string temp;
-vector<pair<int, int>> v;
 
 int main() {
   cin >> n >> m;
@@ -22,8 +21,6 @@ int main() {
   }
 
   queue<pair<int, int>> q;
-  // visited[y1][x1] = 1;
-  // q.push({y1, x1});
 
   while (ok) {
     cnt++;
@@ -34,7 +31,6 @@ int main() {
     while (q.size()) {
       tie(x, y) = q.front();
       q.pop();
-      // cout << "x: " << x << " y: " << y << '\n';
 
       for (int i = 0; i < 4; i++) {
         int ny = y + dy[i];
@@ -56,14 +52,6 @@ int main() {
       }
       if (!ok) break;
     }
-    // a 배열 출력
-    // cout << '\n';
-    // for (int i = 0; i < n; i++) {
-    //   for (int j = 0; j < m; j++) {
-    //     cout << a[i][j] << ' ';
-    //   }
-    //   cout << '\n';
-    // }
     if (!ok) break;
   }
 
