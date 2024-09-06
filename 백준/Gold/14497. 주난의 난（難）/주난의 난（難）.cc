@@ -5,57 +5,51 @@ using namespace std;
 const int dy[] = {-1, 0, 1, 0};
 const int dx[] = {0, 1, 0, -1};
 bool ok = true;
-int n, m, x1, y1, x2, y2, y, x, cnt = 1, visited[304][304];
+int n, m, x1, y1, x2, y2, visited[304][304];
 char a[304][304];
-string temp;
+queue<int> q;
 
 int main() {
-  cin >> n >> m;
-  cin >> x1 >> y1 >> x2 >> y2;
-
+  scanf("%d %d", &n, &m);
+  scanf("%d %d %d %d", &y1, &x1, &y2, &x2);
+  y1--, x1--, y2--, x2--;
   for (int i = 0; i < n; i++) {
-    cin >> temp;
-    for (int j = 0; j < m; j++) {
-      a[i][j] = temp[j];
-    }
+    scanf("%s", a[i]);
   }
 
-  queue<pair<int, int>> q;
+  q.push(1000 * y1 + x1);
+  visited[y1][x1] = 1;
+  int cnt = 0;
 
-  while (ok) {
+  while (a[y2][x2] != '0') {
     cnt++;
-    memset(visited, 0, sizeof(visited));
-    visited[x1 - 1][y1 - 1] = 1;
-    q.push({x1 - 1, y1 - 1});
-
+    queue<int> temp;
     while (q.size()) {
-      tie(x, y) = q.front();
+      // y, x 좌표를 변수 하나에 담는 법
+      int y = q.front() / 1000;
+      int x = q.front() % 1000;
       q.pop();
 
       for (int i = 0; i < 4; i++) {
         int ny = y + dy[i];
         int nx = x + dx[i];
 
-        if (ny < 0 || nx < 0 || nx >= n || ny >= m || visited[nx][ny]) continue;
-
-        if (nx == x2 - 1 && ny == y2 - 1) {
-          ok = false;
-          break;
-        }
-        if (a[nx][ny] == '0') {
-          visited[nx][ny] = 1;
-          q.push({nx, ny});
-        } else if (a[nx][ny] == '1') {
-          visited[nx][ny] = 1;
-          a[nx][ny] = '0';
-        }
+        if (ny < 0 || ny >= n || nx < 0 || nx >= m || visited[ny][nx]) continue;
+        visited[ny][nx] = cnt;
+        if (a[ny][nx] != '0') {
+          a[ny][nx] = '0';
+          temp.push(1000 * ny + nx);
+        } else
+          q.push(1000 * ny + nx);
       }
-      if (!ok) break;
     }
-    if (!ok) break;
+    q = temp;
   }
 
-  cout << cnt - 1;
-
+  cout << cnt;
   return 0;
 }
+
+// 같은 가중치 그래프 순회: BFS
+// Queue를 2개 사용하기
+// 최대 범위가 주어졌을 때, x, y 좌표를 한 변수로 표현 가능
