@@ -1,46 +1,53 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define prev aaa
 
+bool flag = true;
 int n;
-string s;
-char a[101][101];
+string temp;
+char a[68][68];
+char prev;
 
 string quard(int y, int x, int size) {
-  if (size == 1) return string(1, a[y][x]);
-  char b = a[y][x];
   string ret = "";
+  flag = true;
 
   for (int i = y; i < y + size; i++) {
     for (int j = x; j < x + size; j++) {
-      if (b != a[i][j]) {
-        ret += '(';
-        ret += quard(y, x, size / 2);
-        ret += quard(y, x + size / 2, size / 2);
-        ret += quard(y + size / 2, x, size / 2);
-        ret += quard(y + size / 2, x + size / 2, size / 2);
-        ret += ')';
-        return ret;
+      if (i == y && j == x) {
+        prev = a[i][j];
+      } else {
+        if (a[i][j] != prev) {
+          flag = false;
+          break;
+        }
       }
+      prev = a[i][j];
     }
+    if (!flag) break;
   }
-  return string(1, a[y][x]);
+
+  if (flag) {
+    ret += a[y][x];
+  } else {
+    ret += '(';
+    ret += quard(y, x, size / 2);
+    ret += quard(y, x + size / 2, size / 2);
+    ret += quard(y + size / 2, x, size / 2);
+    ret += quard(y + size / 2, x + size / 2, size / 2);
+    ret += ')';
+  }
+  return ret;
 }
 
 int main() {
   cin >> n;
   for (int i = 0; i < n; i++) {
-    cin >> s;
-    for (int j = 0; j < n; j++) {
-      a[i][j] = s[j];
-    }
+    cin >> temp;
+    for (int j = 0; j < n; j++) a[i][j] = temp[j];
   }
 
   cout << quard(0, 0, n) << '\n';
 
   return 0;
 }
-
-// 분할 정복 문제
-// 문제를 여러개의 작은 문제로 쪼개어 해결
-// 재귀 or Stack으로 해결 가능
-// 나는 네개의 좌표를 전달하여 풀었지만, 위와 같이 size를 통해 푸는 것이 좀 더 좋아보임
