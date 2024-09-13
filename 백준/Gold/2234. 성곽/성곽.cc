@@ -55,3 +55,6 @@ int main() {
 
   return 0;
 }
+
+// Connected Component (DFS), 완탐 & 원복, 비트마스킹
+// 벽 부수고 -> DFS -> 벽 복구
