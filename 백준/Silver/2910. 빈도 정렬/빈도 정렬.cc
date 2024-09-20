@@ -1,32 +1,33 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, c;
-int a;
-map<int, int> mp;
-map<int, int> mp_first;
+int n, c, a;
+map<int, int> cnt;
+map<int, int> first;
 
-bool cmp(const pair<int, int>& a, const pair<int, int>& b) {
-  if (a.second == b.second) return mp_first[a.first] < mp_first[b.first];
-  return a.second > b.second;
+vector<int> v;
+bool cmp(int a, int b) {
+  if (cnt[a] == cnt[b]) return first[a] < first[b];
+  return cnt[a] > cnt[b];
 }
 
 int main() {
   cin >> n >> c;
+
   for (int i = 0; i < n; i++) {
     cin >> a;
-    mp[a]++;
-    if (mp_first[a] == 0) mp_first[a] = i + 1;
+    cnt[a]++;
+    if (!first[a]) first[a] = i + 1;
+    v.push_back(a);
   }
-
-  vector<pair<int, int>> v(mp.begin(), mp.end());
 
   sort(v.begin(), v.end(), cmp);
 
-  for (auto n : v) {
-    for (int i = 0; i < n.second; i++) cout << n.first << ' ';
-  }
-  cout << '\n';
+  for (int a : v) cout << a << ' ';
 
   return 0;
 }
+
+// 빈도 정렬
+// 등장 횟수, 먼저 나온것
+// 두개의 자료구조에 각각 저장?
