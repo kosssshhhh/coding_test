@@ -8,32 +8,25 @@ stack<int> stk;
 int main() {
   cin >> n >> s;
 
+  stk.push(-1);
   for (int i = 0; i < n; i++) {
-    if (stk.empty()) {
-      stk.push(i);
-      continue;
-    }
-    if (s[stk.top()] == '(' && s[i] == ')') {
-      arr[stk.top()] = 1;
-      arr[i] = 1;
+    if (s[i] == '(') stk.push(i);
+    if (s[i] == ')') {
       stk.pop();
-    } else {
-      stk.push(i);
+      if (!stk.empty()) {
+        mx = max(mx, i - stk.top());
+      } else {
+        stk.push(i);
+      }
     }
-  }
-  for (int i = 0; i < n; i++) {
-    if (arr[i] == 1) {
-      cnt++;
-      mx = max(cnt, mx);
-    } else
-      cnt = 0;
   }
 
   cout << mx;
   return 0;
 }
 
-// 1. 배열을 이용하는 방법
-// stack에 string의 인덱스를 넣어줌
-// match 되면, arr에 해당 index 1로 바꿈
-// arr의 연속된 1을 구해준다.
+// 2. stk 이용하는 방법
+// 우선 stk에 -1 push
+// ( 들어오면 stk에 i push
+// ) 들어오면 stk.pop() 후 stk.top() 으로 최대 길이 구해줌
+// if pop 했는데 stk이 비었다면 i push
