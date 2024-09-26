@@ -2,77 +2,44 @@
 using namespace std;
 
 string s;
-char a[] = {'a', 'e', 'i', 'o', 'u'};
-bool m = true;
-
-bool ism(char c) {
-  bool check = false;
-  for (int i = 0; i < 5; i++) {
-    if (a[i] == c) {
-      check = true;
-      return check;
-    } else
-      continue;
-  }
-  return check;
-}
+char prevv;
+int flag;
 
 int main() {
-  while (true) {
-    m = true;
+  while (1) {
     cin >> s;
     if (s == "end") break;
 
+    bool ism = false;
+    int mcnt = 0;
+    int jcnt = 0;
+    flag = 0;
+
     for (int i = 0; i < s.size(); i++) {
-      if (ism(s[i])) {
-        m = true;
+      if (i > 0 && prevv != 'e' && prevv != 'o' && prevv == s[i]) {
+        flag = 1;
         break;
-      } else {
-        m = false;
-        continue;
       }
-    }
-    if (!m) {
-      cout << "<" << s << "> is not acceptable.\n";
-      continue;
-    }
-
-    for (int i = 0; i < s.size() - 2; i++) {
-      if (s.size() < 3) break;
-      bool a = ism(s[i]);
-      bool b = ism(s[i + 1]);
-      bool c = ism(s[i + 2]);
-      if (a == b && b == c && a == c) {
-        m = false;
+      if (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' ||
+          s[i] == 'u') {
+        ism = true;
+        mcnt++;
+        jcnt = 0;
+      } else {
+        mcnt = 0;
+        jcnt++;
+      }
+      if (mcnt >= 3 || jcnt >= 3) {
+        flag = 1;
         break;
-      } else {
-        continue;
       }
-    }
-    if (!m) {
-      cout << "<" << s << "> is not acceptable.\n";
-      continue;
+      prevv = s[i];
     }
 
-    for (int i = 0; i < s.size() - 1; i++) {
-      if (s.size() < 2) break;
-      if (s[i] == s[i + 1]) {
-        if (s[i] == 'e' || s[i] == 'o') {
-          continue;
-        } else {
-          m = false;
-          break;
-        }
-      } else {
-        continue;
-      }
-    }
-    if (!m) {
+    if (flag == 0 && ism)
+      cout << "<" << s << "> is acceptable.\n";
+    else
       cout << "<" << s << "> is not acceptable.\n";
-      continue;
-    }
-
-    if (m) cout << "<" << s << "> is acceptable.\n";
   }
 
   return 0;
