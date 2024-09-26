@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n;
-string s, num = "";
+int m;
+string s, st;
 vector<string> v;
 
 bool cmp(string a, string b) {
@@ -12,45 +12,42 @@ bool cmp(string a, string b) {
 
 void go() {
   while (true) {
-    if (num.size() && num.front() == '0')
-      num.erase(num.begin());
+    if (st.size() && st.front() == '0')
+      st.erase(st.begin());
     else
       break;
   }
-
-  if (num.size() == 0) num = "0";
-  v.push_back(num);
+  if (st.size() == 0) st = "0";
+  v.push_back(st);
   return;
 }
 
 int main() {
-  cin >> n;
-
-  for (int i = 0; i < n; i++) {
+  cin >> m;
+  for (int i = 0; i < m; i++) {
     cin >> s;
-    num = "";
-
+    st = "";
     for (int j = 0; j < s.size(); j++) {
-      if (s[j] >= '0' && s[j] <= '9')
-        num += s[j];
-      else {
-        if (num != "") {
+      if (s[j] >= '0' && s[j] <= '9') {
+        st += s[j];
+      } else {
+        if (st != "") {
           go();
-          num = "";
+          st = "";
         }
       }
-
-      if (num != "" && j == s.size() - 1) {
-        // 마지막 숫자일 경우
-        go();
-        num = "";
-      }
+    }
+    if (st != "") {
+      go();
+      st = "";
     }
   }
 
   sort(v.begin(), v.end(), cmp);
 
-  for (string a : v) cout << a << '\n';
+  for (string ret : v) {
+    cout << ret << '\n';
+  }
 
   return 0;
 }
