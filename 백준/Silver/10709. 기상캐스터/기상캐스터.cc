@@ -1,45 +1,41 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+int H, W;
 string temp;
-int h, w;
 char a[104][104];
-int ret[104][104];
-int cnt;
+int b[104][104];
 
 int main() {
-  cin >> h >> w;
-  for (int i = 0; i < h; i++) {
+  cin >> H >> W;
+  for (int i = 0; i < H; i++) {
     cin >> temp;
-    for (int j = 0; j < w; j++) {
+    for (int j = 0; j < W; j++) {
       a[i][j] = temp[j];
     }
   }
 
-  for (int i = 0; i < h; i++) {
-    int cnt;
-    bool flag = false;
+  for (int i = 0; i < H; i++) {
+    int cnt = 0;
 
-    for (int j = 0; j < w; j++) {
-      if (!flag) ret[i][j] = -1;
+    for (int j = 0; j < W; j++) {
       if (a[i][j] == 'c') {
-        flag = true;
         cnt = 0;
-        ret[i][j] = cnt;
-      }
-      if (flag && a[i][j] == '.') {
+        b[i][j] = cnt;
         cnt++;
-        ret[i][j] = cnt;
+      } else if (a[i][j] == '.' && cnt != 0) {
+        b[i][j] = cnt;
+        cnt++;
+      } else if (a[i][j] == '.' && cnt == 0) {
+        b[i][j] = -1;
       }
     }
   }
-
-  for (int i = 0; i < h; i++) {
-    for (int j = 0; j < w; j++) {
-      cout << ret[i][j] << ' ';
+  for (int i = 0; i < H; i++) {
+    for (int j = 0; j < W; j++) {
+      cout << b[i][j] << ' ';
     }
     cout << '\n';
   }
-
   return 0;
 }
