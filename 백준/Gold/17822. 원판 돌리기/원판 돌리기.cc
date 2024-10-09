@@ -16,17 +16,8 @@ void _rotate(int x, int d, int k) {
   }
   return;
 }
-void print() {
-  for (int i = 1; i <= N; i++) {
-    for (int j = 0; j < M; j++) {
-      cout << a[i][j] << ' ';
-    }
-    cout << '\n';
-  }
-}
 
 void a_avg() {
-  // cout << "avg 구하기\n";
   int sum = 0, cnt = 0;
 
   for (int i = 1; i <= N; i++) {
@@ -37,9 +28,10 @@ void a_avg() {
       }
     }
   }
+
   if (cnt == 0) return;
+
   double avg = (double)sum / (double)cnt;
-  // cout << "avg : " << avg << '\n';
 
   for (int i = 1; i <= N; i++) {
     for (int j = 0; j < M; j++) {
@@ -122,3 +114,6 @@ int main() {
 
   return 0;
 }
+
+// 구현 문제
+// 원형은 자료 구조 순회할 때 % 연산자를 활용해서 begin과 end 이을 수 있음.
