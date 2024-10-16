@@ -3,42 +3,46 @@ using namespace std;
 
 int n, a[17][17], dp[17][17][3];
 
-bool check(int y, int x, int d) {
-  if (d == 0 || d == 2) {
-    if (!a[y][x]) return true;
-  } else if (d == 1) {
-    if (a[y][x] == 0 && a[y - 1][x] == 0 && a[y][x - 1] == 0) return true;
+int go(int y, int x, int d) {
+  if (y < 0 || x < 0 || y >= n || x >= n) return 0;
+  if (a[y][x]) return 0;
+  if (d == 1) {
+    if (a[y - 1][x]) return 0;
+    if (a[y][x - 1]) return 0;
   }
 
-  return false;
+  if (y == n - 1 && x == n - 1) return 1;
+
+  int &ret = dp[y][x][d];
+  if (ret != -1) return ret;
+
+  ret = 0;
+
+  if (d == 0) {
+    ret += go(y, x + 1, 0);
+    ret += go(y + 1, x + 1, 1);
+  } else if (d == 1) {
+    ret += go(y, x + 1, 0);
+    ret += go(y + 1, x + 1, 1);
+    ret += go(y + 1, x, 2);
+  } else if (d == 2) {
+    ret += go(y + 1, x + 1, 1);
+    ret += go(y + 1, x, 2);
+  }
+  return ret;
 }
 
 int main() {
   cin >> n;
-  for (int i = 1; i <= n; i++) {
-    for (int j = 1; j <= n; j++) {
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
       cin >> a[i][j];
     }
   }
 
-  dp[1][2][0] = 1;
+  memset(dp, -1, sizeof(dp));
 
-  for (int i = 1; i <= n; i++) {
-    for (int j = 1; j <= n; j++) {
-      if (check(i, j + 1, 0)) dp[i][j + 1][0] += dp[i][j][0];
-      if (check(i + 1, j + 1, 1)) dp[i + 1][j + 1][1] += dp[i][j][0];
-
-      if (check(i + 1, j, 2)) dp[i + 1][j][2] += dp[i][j][2];
-      if (check(i + 1, j + 1, 1)) dp[i + 1][j + 1][1] += dp[i][j][2];
-
-      if (check(i, j + 1, 0)) dp[i][j + 1][0] += dp[i][j][1];
-      if (check(i + 1, j + 1, 1)) dp[i + 1][j + 1][1] += dp[i][j][1];
-      if (check(i + 1, j, 2)) dp[i + 1][j][2] += dp[i][j][1];
-    }
-  }
-  int ret = dp[n][n][0] + dp[n][n][1] + dp[n][n][2];
-
-  cout << ret;
+  cout << go(0, 1, 0);
 
   return 0;
 }
