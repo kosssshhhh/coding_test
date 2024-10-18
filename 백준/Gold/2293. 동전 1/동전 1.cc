@@ -7,7 +7,7 @@ int main() {
   cin >> n >> k;
 
   dp[0] = 1;
-  for (int i = 1; i <= n; i++) {
+  for (int i = 0; i < n; i++) {
     cin >> temp;
 
     if (temp >= 10001) continue;
