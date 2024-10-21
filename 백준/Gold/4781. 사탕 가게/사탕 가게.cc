@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, m1, m2, c, dp[100004];
+int n, m1, m2, c;
+int dp[10004];
 
 int main() {
   while (1) {
@@ -13,9 +14,10 @@ int main() {
 
     for (int i = 0; i < n; i++) {
       scanf("%d %d.%d", &c, &m1, &m2);
-      int p = m1 * 100 + m2;
-      for (int j = p; j <= cost; j++) {
-        dp[j] = max(dp[j], dp[j - p] + c);
+      int temp = m1 * 100 + m2;
+
+      for (int j = temp; j <= cost; j++) {
+        dp[j] = max(dp[j], dp[j - temp] + c);
       }
     }
     printf("%d\n", dp[cost]);
