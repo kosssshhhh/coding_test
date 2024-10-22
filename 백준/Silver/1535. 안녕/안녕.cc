@@ -10,11 +10,11 @@ int main() {
   for (int i = 0; i < n; i++) cin >> b[i];  // 기쁨
 
   for (int i = 0; i < n; i++) {
-    for (int j = 100; j >= a[i]; j--) {
+    for (int j = 100; j > a[i]; j--) {
       dp[j] = max(dp[j], dp[j - a[i]] + b[i]);
     }
   }
-  cout << dp[99];
+  cout << dp[100];
 
   return 0;
 }
