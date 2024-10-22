@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, m1, m2, c;
+int n, c, m, m1, m2;
 int dp[10004];
 
 int main() {
@@ -11,16 +11,16 @@ int main() {
 
     int cost = m1 * 100 + m2;
     memset(dp, 0, sizeof(dp));
-
     for (int i = 0; i < n; i++) {
       scanf("%d %d.%d", &c, &m1, &m2);
-      int temp = m1 * 100 + m2;
 
-      for (int j = temp; j <= cost; j++) {
-        dp[j] = max(dp[j], dp[j - temp] + c);
+      int m = m1 * 100 + m2;
+
+      for (int j = m; j <= cost; j++) {
+        dp[j] = max(dp[j], dp[j - m] + c);
       }
     }
-    printf("%d\n", dp[cost]);
+    cout << dp[cost] << '\n';
   }
 
   return 0;
