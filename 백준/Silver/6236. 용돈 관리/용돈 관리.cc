@@ -36,7 +36,7 @@ int main() {
     int mid = (lo + hi) / 2;
 
     if (check(mid)) {
-      // cout << "mid: " << mid << '\n';
+      // ret = min(ret, mid); 최소값으로 했는데 그렇게 하면 안됨
       ret = mid;
       hi = mid - 1;
     } else {
@@ -48,3 +48,5 @@ int main() {
 
   return 0;
 }
+
+// 이분탐색
