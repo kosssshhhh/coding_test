@@ -30,7 +30,7 @@ int main() {
     total += a[i];
   }
 
-  int lo = mx, hi = total, ret = hi;
+  int lo = mx, hi = 1000000000, ret = hi;
 
   while (lo <= hi) {
     int mid = (lo + hi) / 2;
