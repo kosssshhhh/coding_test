@@ -1,12 +1,7 @@
-// vector로 받기
-// a 기준으로 정렬
-// b로 lis 구하기
-// n - lis.length 답
-
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, ret, cnt[104];
+int n, len, lis[104];
 pair<int, int> a[104];
 
 int main() {
@@ -16,18 +11,17 @@ int main() {
   }
 
   sort(a, a + n);
-  fill(cnt, cnt + n, 1);
 
   for (int i = 0; i < n; i++) {
-    int maxVal = 0;
-    for (int j = 0; j < i; j++) {
-      if (a[i].second > a[j].second && maxVal < cnt[j]) maxVal = cnt[j];
-    }
-    cnt[i] = maxVal + 1;
-    ret = max(ret, cnt[i]);
+    auto pos = lower_bound(lis, lis + len, a[i].second);
+    if (*pos == 0) len++;
+    *pos = a[i].second;
   }
 
-  cout << n - ret;
+  cout << n - len;
 
   return 0;
 }
+
+// 최대증가수열
+// A전봇대를 sort하고 봤더니 B 전봇대를 Lis로 뽑으면 정답
