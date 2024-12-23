@@ -11,6 +11,7 @@ string s;
 
 int main() {
   cin >> n >> m >> T >> D;
+  // 입출력 전처리
   for (int i = 0; i < n; i++) {
     cin >> s;
     for (int j = 0; j < m; j++) {
@@ -29,8 +30,10 @@ int main() {
     }
   }
 
+  // 최단거리를 구하므로 INF로 초기화
   fill(&b[0][0], &b[0][0] + 3000 * 3000, INF);
 
+  // 정점간 가중치 배열 생성
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < m; j++) {
       for (int d = 0; d < 4; d++) {
@@ -51,15 +54,17 @@ int main() {
     }
   }
 
+  // 플로이드 워셜 최단거리
   for (int k : v) {
     for (int i : v) {
       for (int j : v) {
-        b[i][j] = min(b[i][j], b[i][k] + b[k][j]);
+        b[i][j] = min(b[i][j], b[i][k] + b[k][j]);  // i,j 사이 k를 경유했을 때
       }
     }
   }
 
   for (int j : v) {
+    // 호텔에서 출발하어 호텔로 돌아와야함
     if (D >= b[0][j] + b[j][0]) {
       ret = max(ret, a[j / 100][j % 100]);
     }
