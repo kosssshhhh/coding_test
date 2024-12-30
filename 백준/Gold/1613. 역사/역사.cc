@@ -2,22 +2,12 @@
 using namespace std;
 
 int n, k, s, e, t, dist[401][401];
-const int INF = 987654321;
 
 int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(NULL);
   cout.tie(NULL);
   cin >> n >> k;
-
-  for (int i = 1; i <= n; i++) {
-    for (int j = 1; j <= n; j++) {
-      if (i == j)
-        dist[i][j] = 0;
-      else
-        dist[i][j] = INF;
-    }
-  }
 
   for (int i = 0; i < k; i++) {
     cin >> s >> e;
@@ -40,13 +30,12 @@ int main() {
   cin >> t;
   for (int i = 0; i < t; i++) {
     cin >> s >> e;
-    if (dist[s][e] == INF)
-      cout << 0 << '\n';
-    else if (dist[s][e] == -1)
-      cout << -1 << '\n';
-    else if (dist[s][e] == 1)
-      cout << 1 << '\n';
+    cout << dist[s][e] << '\n';
   }
 
   return 0;
 }
+
+// 플로이드 워셜
+// 모든 정점 간의 최단거리 구하기
+// N 400 이하
