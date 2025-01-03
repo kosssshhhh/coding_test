@@ -17,8 +17,9 @@ void dijkstra() {
   while (pq.size()) {
     int here_cost = pq.top().first;
 
-    int y = pq.top().second.first;
-    int x = pq.top().second.second;
+    int y, x;
+    tie(y, x) = pq.top().second;
+
     pq.pop();
 
     // printf("%d : %d\n", y, x);
