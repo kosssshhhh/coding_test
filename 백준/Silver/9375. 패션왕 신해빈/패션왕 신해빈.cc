@@ -1,30 +1,27 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int t, n, answer = 1;
-char temp1[24], temp2[24];
+int t, n;
+string temp1, temp2;
 
 int main() {
   cin >> t;
-
-  while (t) {
+  while (t--) {
     map<string, int> mp;
+    int ret = 1;
     cin >> n;
-
-    answer = 1;
-
     for (int i = 0; i < n; i++) {
-      scanf("%s %s", temp1, temp2);
+      cin >> temp1 >> temp2;
       mp[temp2]++;
     }
-    for (auto it : mp) {
-      // cout << it.first << " : " << it.second << '\n';
-      answer *= it.second + 1;
+
+    for (auto a : mp) {
+      ret *= a.second + 1;
     }
-
-    cout << answer - 1 << '\n';
-
-    t--;
+    cout << ret - 1 << '\n';
   }
+
   return 0;
 }
+
+// map 활용한 조합
