@@ -1,24 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, cnt = 1;
-unsigned long long temp = 1;
+int n;
 
 int main() {
-  while (1) {
-    cin >> n;
-    if (cin.eof() == 1) break;
-    temp = 1;
-    cnt = 1;
-    while (1) {
-      temp %= n;
+  while (scanf("%d", &n) != EOF) {
+    long long temp = 1;
+    int cnt = 1;
+
+    while (true) {
       if (temp % n == 0) {
         cout << cnt << '\n';
         break;
       }
+      temp = temp * 10 + 1;
       cnt++;
-      temp = 1 + temp * 10;
+      temp %= n;
     }
   }
+
   return 0;
 }
