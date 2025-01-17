@@ -35,3 +35,5 @@ const answer = (n, m, apples) => {
 }
 
 console.log(answer(n, m, apples));
+
+// js 백준에서 입출력의 중요성에 대해서 알게됨
