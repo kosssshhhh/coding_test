@@ -1,53 +1,51 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define prev aaa
 
-bool flag = true;
 int n;
-string temp;
-char a[68][68];
-char prev;
+string s, temp;
+char a[65][65];
 
-string quard(int y, int x, int size) {
-  string ret = "";
-  flag = true;
+bool check(int n, int y, int x) {
+  char first_char = a[y][x];
 
-  for (int i = y; i < y + size; i++) {
-    for (int j = x; j < x + size; j++) {
-      if (i == y && j == x) {
-        prev = a[i][j];
-      } else {
-        if (a[i][j] != prev) {
-          flag = false;
-          break;
-        }
-      }
-      prev = a[i][j];
+  for (int i = y; i < y + n; i++) {
+    for (int j = x; j < x + n; j++) {
+      if (first_char != a[i][j]) return false;
     }
-    if (!flag) break;
   }
+  return true;
+}
 
-  if (flag) {
+string go(int n, int y, int x) {
+  string ret = "";
+
+  // 확인하는 로직
+  if (check(n, y, x) || n == 1) {
     ret += a[y][x];
+    return ret;
   } else {
     ret += '(';
-    ret += quard(y, x, size / 2);
-    ret += quard(y, x + size / 2, size / 2);
-    ret += quard(y + size / 2, x, size / 2);
-    ret += quard(y + size / 2, x + size / 2, size / 2);
+    ret += go(n / 2, y, x);
+    ret += go(n / 2, y, x + n / 2);
+    ret += go(n / 2, y + n / 2, x);
+    ret += go(n / 2, y + n / 2, x + n / 2);
     ret += ')';
   }
+
   return ret;
 }
 
 int main() {
   cin >> n;
+
   for (int i = 0; i < n; i++) {
     cin >> temp;
-    for (int j = 0; j < n; j++) a[i][j] = temp[j];
+    for (int j = 0; j < n; j++) {
+      a[i][j] = temp[j];
+    }
   }
 
-  cout << quard(0, 0, n) << '\n';
+  cout << go(n, 0, 0);
 
   return 0;
 }
