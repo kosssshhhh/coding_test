@@ -1,55 +1,49 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, team;
-int at, bt, as, bs, pre = 0;
-
-string t;
-
-int min_to_sec(string t) {
-  int pos;
-  int ret;
-  pos = t.find(':');
-  ret = atoi(t.substr(0, pos).c_str()) * 60 +
-        atoi(t.substr(pos + 1, t.length()).c_str());
-
-  return ret;
-}
-
-string sec_to_min(int t) {
-  string min = to_string(t / 60);
-  string sec = to_string(t % 60);
-  if (min.length() == 1) min = '0' + min;
-
-  if (sec.length() == 1) sec = '0' + sec;
-
-  return min + ':' + sec;
-}
+int n, team, a, b, t_a, t_b, s_a, s_b, before_time;
 
 int main() {
   cin >> n;
 
   for (int i = 0; i < n; i++) {
-    cin >> team >> t;
+    cin >> team;
+    scanf("%d:%d", &a, &b);
 
-    int a = min_to_sec(t);
+    int _time = a * 60 + b;
 
-    if (as > bs) at += a - pre;
+    // if (i == 0) {
+    //   if (team == 1)
+    //     s_a++;
+    //   else if (team == 2)
+    //     s_b++;
+    //   before_time = _time;
+    //   continue;
+    // }
 
-    if (as < bs) bt += a - pre;
+    if (s_a > s_b) {
+      t_a += _time - before_time;
+    } else if (s_a < s_b) {
+      t_b += _time - before_time;
+    } else {
+      // nothing
+    }
 
     if (team == 1)
-      as++;
+      s_a++;
     else if (team == 2)
-      bs++;
-    pre = a;
+      s_b++;
+
+    before_time = _time;
+  }
+  if (s_a > s_b) {
+    t_a += 48 * 60 - before_time;
+  } else if (s_a < s_b) {
+    t_b += 48 * 60 - before_time;
   }
 
-  if (as > bs) at += 2880 - pre;
-
-  if (as < bs) bt += 2880 - pre;
-
-  cout << sec_to_min(at) << '\n' << sec_to_min(bt) << '\n';
+  printf("%02d:%02d\n", t_a / 60, t_a % 60);
+  printf("%02d:%02d\n", t_b / 60, t_b % 60);
 
   return 0;
 }
