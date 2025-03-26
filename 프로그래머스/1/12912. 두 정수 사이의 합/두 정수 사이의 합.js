@@ -1,10 +1,7 @@
 function solution(a, b) {
     let ret = 0;
     
-    let A = a < b ? a : b;
-    let B = a < b ? b : a;
-    
-    for(let i=A; i<=B; i++) ret += i;
+    for(let i=Math.min(a, b); i<=Math.max(a, b); i++) ret += i
     
     return ret;
 }
