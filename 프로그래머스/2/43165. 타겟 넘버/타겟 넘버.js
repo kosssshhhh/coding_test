@@ -1,8 +1,6 @@
 const go = (idx, v, target, numbers) => {
-    if(idx === numbers.length){
-        if(v === target) return 1;
-        else return 0;
-    }
+    if(idx === numbers.length) return v === target ? 1 : 0;
+    
     
     return go(idx + 1, v + numbers[idx], target, numbers) + go(idx + 1, v - numbers[idx], target, numbers);
 }
