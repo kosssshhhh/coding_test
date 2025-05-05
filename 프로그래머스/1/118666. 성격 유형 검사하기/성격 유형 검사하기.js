@@ -1,27 +1,15 @@
-function solution(survey, choices) {
-    let answer = '';
+function solution(survey, choices) {    
+    const MBTI = {};
+    const types = ['RT', 'CF', 'JM', 'AN'];
     
-    const obj = {'R': 0, 'T': 0, 'C': 0, 'F': 0, 'J': 0, 'M': 0, 'A': 0, 'N': 0};
-    const n = survey.length;
-    const arr = [['R', 'T'], ['C', 'F'], ['J', 'M'], ['A', 'N']];
-    
-    for(let i=0; i<n; i++){
-        const [first, second] = survey[i];
-        const c = choices[i];
+    types.forEach(type => type.split('').forEach(c => MBTI[c] = 0));
+
+    choices.forEach((choice, index) => {
+        const [l, r] = survey[index];
         
-        if(c > 4){
-            obj[second] += c - 4;
-        }else if(c < 4){
-            obj[first] += 4 - c
-        }
-    }
-    
-    arr.forEach(e => {
-        const [type1, type2] = e;
-        
-        obj[type1] < obj[type2] ? answer += type2 : answer += type1;
+        MBTI[choice > 4 ? r : l] += Math.abs(choice - 4);
     })
     
-    
-    return answer;
+    return types.map(([a, b]) => MBTI[b] > MBTI[a] ? b : a).join("");
 }
+                   
