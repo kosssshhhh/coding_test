@@ -2,16 +2,14 @@
 using namespace std;
 
 string s;
-int cnt[26];
+int a[27];
 
 int main() {
   cin >> s;
 
-  for (int i = 0; i < s.length(); i++) {
-    cnt[s[i] - 'a']++;
-  }
+  for (char c : s) a[c - 'a']++;
 
-  for (int i : cnt) cout << i << ' ';
+  for (int i = 0; i < 26; i++) cout << a[i] << ' ';
 
   return 0;
 }
