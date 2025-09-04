@@ -2,23 +2,23 @@
 using namespace std;
 typedef long long ll;
 
-ll a, b, c;
+ll A, B, C;
 
 ll go(ll a, ll b) {
-  if (b == 1) return a % c;
+  if (b <= 1) return a % C;
 
   ll ret = go(a, b / 2);
-  ret = ret * ret % c;
 
-  if (b % 2) ret = ret * a % c;
+  ret = ret * ret % C;
+  if (b & 1) ret = ret * a % C;
 
   return ret;
 }
 
 int main() {
-  cin >> a >> b >> c;
+  cin >> A >> B >> C;
 
-  cout << go(a, b);
+  cout << go(A, B);
 
   return 0;
 }
