@@ -4,18 +4,18 @@ using namespace std;
 int n;
 
 int main() {
-  while (scanf("%d", &n) != EOF) {
-    long long temp = 1;
-    int cnt = 1;
+  while (cin >> n) {
+    int ret = 1, cnt = 1;
 
     while (true) {
-      if (temp % n == 0) {
-        cout << cnt << '\n';
+      if (cnt % n == 0) {
+        cout << ret << '\n';
         break;
+      } else {
+        cnt = cnt * 10 + 1;
+        cnt %= n;
+        ret++;
       }
-      temp = temp * 10 + 1;
-      cnt++;
-      temp %= n;
     }
   }
 
