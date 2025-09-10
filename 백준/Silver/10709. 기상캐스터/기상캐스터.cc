@@ -1,41 +1,44 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int H, W;
-string temp;
-char a[104][104];
-int b[104][104];
+int h, w, visited[104][104];
+string s;
 
 int main() {
-  cin >> H >> W;
-  for (int i = 0; i < H; i++) {
-    cin >> temp;
-    for (int j = 0; j < W; j++) {
-      a[i][j] = temp[j];
-    }
-  }
+  cin >> h >> w;
 
-  for (int i = 0; i < H; i++) {
-    int cnt = 0;
+  memset(visited, -1, sizeof(visited));
 
-    for (int j = 0; j < W; j++) {
-      if (a[i][j] == 'c') {
-        cnt = 0;
-        b[i][j] = cnt;
-        cnt++;
-      } else if (a[i][j] == '.' && cnt != 0) {
-        b[i][j] = cnt;
-        cnt++;
-      } else if (a[i][j] == '.' && cnt == 0) {
-        b[i][j] = -1;
+  for (int i = 0; i < h; i++) {
+    cin >> s;
+    for (int j = 0; j < w; j++) {
+      if (s[j] == 'c') {
+        visited[i][j] = 0;
       }
     }
   }
-  for (int i = 0; i < H; i++) {
-    for (int j = 0; j < W; j++) {
-      cout << b[i][j] << ' ';
+
+  for (int i = 0; i < h; i++) {
+    bool flag = false;
+    int t = 0;
+    for (int j = 0; j < w; j++) {
+      if (visited[i][j] == 0) {
+        t = 0;
+        flag = true;
+      }
+      if (flag) {
+        visited[i][j] = t;
+        t++;
+      }
+    }
+  }
+
+  for (int i = 0; i < h; i++) {
+    for (int j = 0; j < w; j++) {
+      cout << visited[i][j] << ' ';
     }
     cout << '\n';
   }
+
   return 0;
 }
