@@ -1,19 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n;
+int n, cnt, num = 666;
 
 int main() {
   cin >> n;
 
-  int i = 666;
-
   while (true) {
-    if (to_string(i).find("666") != string::npos) n--;
-    if (n == 0) break;
-    i++;
+    if (to_string(num).find("666") != string::npos) {
+      cnt++;
+      if (cnt == n) {
+        cout << num;
+        break;
+      }
+    }
+    num++;
   }
 
-  cout << i << '\n';
   return 0;
 }
