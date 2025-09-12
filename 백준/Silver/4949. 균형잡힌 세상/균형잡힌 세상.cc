@@ -3,39 +3,33 @@ using namespace std;
 
 string s;
 
-bool check(string s) {
-  stack<char> stk;
-  for (int c : s) {
-    if (c == '[' || c == ']' || c == '(' || c == ')') {
-      if (c == '(' || c == '[')
-        stk.push(c);
-      else {
-        if (stk.empty())
-          return false;
-        else {
-          if (stk.top() == '(' && c == ')')
-            stk.pop();
-          else if (stk.top() == '[' && c == ']')
-            stk.pop();
-          else
-            return false;
-        }
-      }
-    }
-  }
-  return stk.empty();
-}
-
 int main() {
   while (true) {
     getline(cin, s);
-
     if (s == ".") break;
 
-    if (check(s))
+    stack<char> stk;
+
+    for (char c : s) {
+      if (c == '(' || c == ')' || c == '[' || c == ']') {
+        if (stk.empty())
+          stk.push(c);
+        else {
+          if (c == ')' && stk.top() == '(') {
+            stk.pop();
+          } else if (c == ']' && stk.top() == '[') {
+            stk.pop();
+          } else {
+            stk.push(c);
+          }
+        }
+      }
+    }
+    if (stk.empty()) {
       cout << "yes\n";
-    else
+    } else {
       cout << "no\n";
+    }
   }
 
   return 0;
