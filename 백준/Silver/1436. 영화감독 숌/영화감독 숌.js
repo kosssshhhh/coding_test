@@ -1,22 +1,18 @@
-const fs = require('fs');
-const input = fs.readFileSync('/dev/stdin').toString().trim();
-// const input = fs.readFileSync('./input.txt').toString().split('\n');
-const n = Number(input);
-
+const input = require('fs').readFileSync(process.platform === "linux" ? "/dev/stdin" : "./input.txt").toString().trim();
 
 const answer = (n) => {
-    let num = 666;
-    let ret = 0;
+    let num = 666, ret = 0;
 
-    while(true){        
-        if(String(num).includes('666')){
+    while(true){
+        if(num.toString().includes("666")){
             ret++;
-            if(ret === n){
-                console.log(num);
-                break;
+            if(ret === n) {
+                return num;
             }
         }
         num++;
     }
+    
 }
-answer(n);
+
+console.log(answer(Number(input)))
