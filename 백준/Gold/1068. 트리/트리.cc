@@ -1,42 +1,49 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, temp, root, r, ret;
-vector<int> adj[101];
+int n, m, ret, root, visited[50];
+vector<int> adj[50];
 
-int dfs(int here) {
-  int ret = 0;
-  int child = 0;
+void go(int u) {
+  if (u == m) return;
 
-  for (int there : adj[here]) {
-    if (there == r) continue;
-    ret += dfs(there);
-    child++;
+  int children = 0;
+
+  for (int v : adj[u]) {
+    if (v == m) continue;
+    children++;
+    go(v);
   }
-  if (child == 0) return 1;
-  return ret;
+
+  if (children == 0) ret++;
 }
 
 int main() {
-  cin >> n;
-  for (int i = 0; i < n; i++) {
-    cin >> temp;
-    if (temp == -1)
-      root = i;
-    else
-      adj[temp].push_back(i);
-  }
-  cin >> r;
+  ios_base::sync_with_stdio(false);
+  cin.tie(NULL);
 
-  if (r == root) {
+  cin >> n;
+
+  for (int i = 0; i < n; i++) {
+    int p;
+    cin >> p;
+    if (p == -1) {
+      root = i;
+    } else {
+      adj[p].push_back(i);
+    }
+  }
+
+  cin >> m;
+
+  if (m == root) {
     cout << 0 << '\n';
     return 0;
   }
-  ret = dfs(root);
 
-  cout << ret;
+  go(root);
+
+  cout << ret << '\n';
+
   return 0;
 }
-
-// 트리 순회는 무조건 root 노드부터
-// adj 만들어서 해결
