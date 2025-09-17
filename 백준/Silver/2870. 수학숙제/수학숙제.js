@@ -1,44 +1,45 @@
-const fs = require('fs');
-const input = fs.readFileSync('/dev/stdin').toString().split('\n');
+const input = require('fs').readFileSync(process.platform === 'linux' ? '/dev/stdin' : './input.txt').toString().trim().split('\n');
 
-const words = input.slice(1);
+const N = Number(input[0]);
+const inputs = input.slice(1)
 
-const normalizeNumber = (s) => {
-    let num = s.replace(/^0+/,'');
-    return num === '' ? '0' : num;
+const go = (s) => {
+    while(s.length > 0){        
+        if(s[0] == '0'){
+            s = s.substring(1);
+        }else 
+            break;
+    }
+
+    return s.length === 0 ? '0' : s;
 }
 
-const solve = (words) => {
-    const numbers = [];
-    
-    words.forEach(word =>{
-        let currentNumber = '';
+const answer = () => {
+    const v = new Array();
 
-        for (const char of word){
-            if(char >= '0' && char <= '9'){
-                currentNumber += char;
-            }else {
-                if(currentNumber) {
-                    numbers.push(normalizeNumber(currentNumber));
-                    currentNumber = '';
-                }
+    inputs.forEach(a => {
+        let s = "";
+        for(let i = 0; i<a.length; i++){
+            if(a[i] >= '0' && a[i] <= '9'){
+                s += a[i];
+            }else if(s.length > 0){
+                v.push(go(s));
+                s = "";
             }
         }
-        if(currentNumber){
-            numbers.push(normalizeNumber(currentNumber));
+        if(s.length > 0){
+            v.push(go(s));
         }
     })
-    
-    numbers.sort((a, b) => {
-    // 길이를 기준으로 정렬 (우선순위 1)
-    if (a.length !== b.length) {
-        return a.length - b.length;
-    }
-    // 길이가 같다면 BigInt로 숫자 크기 비교
-    return BigInt(a) > BigInt(b) ? 1 : -1;
-});
 
-    numbers.forEach(num => console.log(num));
+    v.sort((a, b) => {
+        if(a.length === b.length){
+            return a - b;
+        }
+        return a.length - b.length;
+    })
+
+    console.log(v.join('\n'));
 }
 
-solve(words);
+answer();
