@@ -1,17 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int N;
-string pat, s;
+int n;
+string s, pat, pre, suf;
 
 int main() {
-  cin >> N >> pat;
+  cin >> n >> pat;
+  int pos = pat.find("*");
+  pre = pat.substr(0, pos);
+  suf = pat.substr(pos + 1);
 
-  int pos = pat.find('*');
-  string pre = pat.substr(0, pos);
-  string suf = pat.substr(pos + 1);
-
-  for (int i = 0; i < N; i++) {
+  for (int i = 0; i < n; i++) {
     cin >> s;
 
     if (s.size() < pre.size() + suf.size()) {
