@@ -6,18 +6,16 @@ int n;
 int main() {
   while (cin >> n) {
     int ret = 1, cnt = 1;
-
     while (true) {
-      if (cnt % n == 0) {
-        cout << ret << '\n';
+      if (ret % n == 0) {
+        cout << cnt << '\n';
         break;
       } else {
-        cnt = cnt * 10 + 1;
-        cnt %= n;
-        ret++;
+        ret = ret * 10 + 1;
+        ret %= n;
+        cnt++;
       }
     }
   }
-
   return 0;
 }
