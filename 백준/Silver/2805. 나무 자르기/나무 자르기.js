@@ -1,35 +1,32 @@
-const fs = require('fs');
-const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+const input = require('fs').readFileSync(process.platform === 'linux' ? '/dev/stdin' : './input.txt').toString().trim().split('\n');
 
-const [n, m] = input[0].split(' ').map(e => Number(e));
-const arr = input[1].split(' ').map(e => Number(e));
+const [N, M] = input[0].split(' ').map(Number);
+const trees = input[1].split(' ').map(Number);
+let mx = 0; 
 
-const answer = (n, m, trees) => {
-    let mx = 0, ret = 0;
-    trees.forEach(tree => mx = Math.max(mx,tree));
-
-    let l = 0, r = mx;
-
-    const bs = (trees, h) => {
-        const arr = trees.map(tree => tree - h);
-        
-        return arr.reduce((acc, curr) => {
-            if(curr < 0) return acc;
-            else return acc + curr;
-        }, 0)
-    }
-
-    while(l <= r){
-        let mid = Math.floor((l + r) / 2);
-        
-        if(bs(trees, mid) >= m){
-            l = mid + 1;
-            ret = mid;
-        }else {
-            r = mid - 1;
-        }
-    }
-    return ret;
+const check = (h) => {
+  return trees.reduce((acc, cur) => acc + Math.max(cur - h, 0), 0) >= M;
 }
 
-console.log(answer(n, m, arr));
+const answer = () => { 
+  let ret = 0; 
+  trees.forEach(tree => mx = Math.max(mx, tree));
+
+  let lo = 0, hi = mx;
+  
+  
+  while(lo <= hi){
+    const mid = Math.floor((lo + hi) / 2);
+    
+    if(check(mid)){
+        ret = Math.max(ret, mid);
+        lo = mid + 1;
+    }else{
+        hi = mid - 1;
+    }
+  }
+
+  console.log(ret);
+}
+
+answer();
