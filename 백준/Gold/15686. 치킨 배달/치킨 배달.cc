@@ -1,48 +1,61 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, m, a[54][54], result = 987654321;
-vector<pair<int, int>> _home, chicken;
-vector<vector<int>> chickenList;
+int n, m, ret = 1e9, a[54][54];
+vector<pair<int, int>> chicken, house;
 
-void combi(int start, vector<int> v) {
+int chicken_dist(vector<int> &v) {
+  int ret = 0;
+  for (int i = 0; i < house.size(); i++) {
+    int mn = 1e9;
+    for (int j = 0; j < v.size(); j++) {
+      int dist = abs(house[i].first - chicken[v[j]].first) +
+                 abs(house[i].second - chicken[v[j]].second);
+      mn = min(mn, dist);
+    }
+    ret += mn;
+  }
+
+  return ret;
+}
+
+void go(int start, vector<int> &v) {
   if (v.size() == m) {
-    chickenList.push_back(v);
+    ret = min(ret, chicken_dist(v));
     return;
   }
+
   for (int i = start + 1; i < chicken.size(); i++) {
     v.push_back(i);
-    combi(i, v);
+    go(i, v);
     v.pop_back();
   }
+
+  return;
 }
 
 int main() {
   cin >> n >> m;
+
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < n; j++) {
       cin >> a[i][j];
-      if (a[i][j] == 1) _home.push_back({i, j});
-      if (a[i][j] == 2) chicken.push_back({i, j});
+      if (a[i][j] == 1)
+        house.push_back({i, j});
+      else if (a[i][j] == 2)
+        chicken.push_back({i, j});
     }
   }
+
   vector<int> v;
-  combi(-1, v);
 
-  for (vector<int> cList : chickenList) {
-    int ret = 0;
-    for (pair<int, int> home : _home) {
-      int _min = 987654321;
-      for (int ch : cList) {
-        int _dist = abs(home.first - chicken[ch].first) +
-                    abs(home.second - chicken[ch].second);
-        _min = min(_dist, _min);
-      }
-      ret += _min;
-    }
-    result = min(result, ret);
-  }
+  go(-1, v);
 
-  cout << result;
+  cout << ret;
+
   return 0;
 }
+
+// 치킨 거리가 가장 작아지는 M개 치킨집 고르기
+// 재귀를 통한 완탐
+//
