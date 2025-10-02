@@ -1,36 +1,36 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, from, to, ret;
+int n, a, b, ret;
 vector<pair<int, int>> v;
 
 int main() {
-  ios::sync_with_stdio(false);
+  ios_base::sync_with_stdio(false);
   cin.tie(NULL);
-  cout.tie(NULL);
-  
   cin >> n;
+
   for (int i = 0; i < n; i++) {
-    cin >> from >> to;
-    v.push_back({from, to});
+    cin >> a >> b;
+    v.push_back({a, b});
   }
+
   sort(v.begin(), v.end());
 
-  from = v[0].first;
-  to = v[0].second;
+  int s = v[0].first, e = v[0].second;
 
-  for (int i = 1; i < v.size(); i++) {
-    if (to > v[i].second) continue;
+  for (int i = 1; i < n; i++) {
+    int from = v[i].first, to = v[i].second;
 
-    if (to > v[i].first) {
-      to = v[i].second;
-    } else {
-      ret += to - from;
-      from = v[i].first;
-      to = v[i].second;
+    if (from <= e && e < to) {
+      e = to;
+    }
+    if (e < from) {
+      ret += e - s;
+      s = from, e = to;
     }
   }
-  ret += to - from;
+  ret += e - s;
+
   cout << ret;
   return 0;
 }
