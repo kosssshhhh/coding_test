@@ -3,10 +3,11 @@ using namespace std;
 
 const int dy[] = {-1, 0, 1, 0};
 const int dx[] = {0, 1, 0, -1};
-int n, m, cnt, ret, a[104][104], visited[104][104];
+int n, m, cnt, t;
+int a[104][104], visited[104][104];
 vector<pair<int, int>> v;
 
-void dfs(int y, int x) {
+void go(int y, int x) {
   visited[y][x] = 1;
 
   for (int i = 0; i < 4; i++) {
@@ -14,11 +15,11 @@ void dfs(int y, int x) {
     int nx = x + dx[i];
 
     if (ny < 0 || nx < 0 || ny >= n || nx >= m || visited[ny][nx]) continue;
-    if (a[ny][nx] == 1 && visited[ny][nx] == 0) {
+    if (a[ny][nx] == 1) {
       v.push_back({ny, nx});
       visited[ny][nx] = 1;
-    } else if (a[ny][nx] == 0 && visited[ny][nx] == 0) {
-      dfs(ny, nx);
+    } else {
+      go(ny, nx);
     }
   }
 }
@@ -33,30 +34,29 @@ int main() {
     }
   }
 
-  while (cnt > 0) {
-    ret++;
+  while (true) {
+    t++;
+
     for (int i = 0; i < n; i++) {
-      dfs(i, 0);
-      dfs(i, m);
+      go(i, 0);
+      go(i, m - 1);
     }
     for (int i = 0; i < m; i++) {
-      dfs(0, i);
-      dfs(n, i);
+      go(0, i);
+      go(n - 1, i);
     }
 
     if (cnt - v.size() <= 0) break;
-
     cnt -= v.size();
 
     for (auto it : v) {
       a[it.first][it.second] = 0;
     }
 
-    v.clear();
     memset(visited, 0, sizeof(visited));
+    v.clear();
   }
 
-  cout << ret << '\n' << cnt;
-
+  cout << t << '\n' << cnt;
   return 0;
 }
