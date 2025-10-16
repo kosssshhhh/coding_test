@@ -1,31 +1,28 @@
 const input = require('fs').readFileSync(process.platform === 'linux' ? '/dev/stdin' : './input.txt').toString().trim().split('\n');
 
 const [T, W] = input[0].split(' ').map(Number);
-const arr = input.slice(1).map(Number);
+const a = input.slice(1).map(Number);
 
-const dp = Array.from({length: 1004}, () => Array.from({length: 35}, () => Array(2).fill(-1)));
+const dp = Array.from({length: T+1}, () => Array.from({length: W+1}, () => Array(2).fill(-1)));
 
-function go(t, w, tree){
-  if(w > W) return -Infinity;
+function go(t, w, idx){
+  // 기저사례
   if(t === T) return 0;
+  if(w < 0) return -Infinity;
 
-  if(dp[t][w][tree] !== -1) return dp[t][w][tree];
-  
-  ret = Math.max(go(t + 1, w, tree), go(t + 1, w + 1, tree ^ 1)) + (arr[t] - 1 === tree);
-  dp[t][w][tree] = ret;
+  // 메모이제이션
+  if(dp[t][w][idx] !== -1) return dp[t][w][idx];
+  let ret = 0;
+
+  // 로직
+  ret = Math.max(go(t + 1, w, idx), go(t + 1, w - 1, idx ^ 1)) + (a[t] === idx + 1);
+  dp[t][w][idx] = ret;
 
   return ret;
 }
 
-function answer() {
-  console.log(Math.max(go(0, 0, 0), go(0, 1, 1)));
+function answer (){
+  console.log(Math.max(go(0, W, 0), go(0, W - 1, 1)));
 }
 
 answer();
-
-// 완탐이 안된다. -> dp
-// memo 
-// 1. 어느 나무 아래,
-// 2. 몇 초 인지
-// 3. 움직임 몇번 남았는지
-// 값은 자두 개수
