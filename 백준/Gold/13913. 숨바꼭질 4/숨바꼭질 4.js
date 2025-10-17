@@ -1,39 +1,39 @@
-const [N, K] = require('fs').readFileSync(process.platform === 'linux' ? '/dev/stdin' : './input.txt').toString().trim().split(' ').map(Number);
-const visited = Array(100004).fill(0);
-const prev = Array(100004).fill(0);
+const [N, K] = require('fs').readFileSync(process.platform === 'linux' ? '/dev/stdin' : './input.txt').toString().trim().split('\n')[0].split(' ').map(Number);
 
-const ret = [];
+function answer () {
+   const queue = [];
+   const visited = Array(100004).fill(0);
+   const prev = Array(100004).fill(-1);
 
-function answer() {
-    const queue = [];
-    queue.push(N);
-    visited[N] = 1; 
+   queue.push(N);
+   visited[N] = 1; 
     let p = 0;
 
     while(p < queue.length){
         const here = queue[p++];
 
-        for (const next of [here + 1, here - 1, here * 2]){
-            if(next < 0 || next > 100000) continue;
-
-            if(visited[next] === 0 || visited[next] === visited[here] + 1){
-                queue.push(next);
-                visited[next] = visited[here] + 1;
-                prev[next] = here;
+        for (const there of [here + 1, here - 1, here * 2]){
+            if(there < 0 || there > 100000) continue;
+            if(visited[there] === 0 || visited[there] === visited[here] + 1){
+                queue.push(there);
+                visited[there] = visited[here] + 1;
+                prev[there] = here;
             }
         }
     }
 
     console.log(visited[K] - 1);
-
-    let temp = K;
-    while(temp !== N){
-        ret.push(temp);
-        temp = prev[temp];
+    
+    let a = K;
+    let v = [];
+    
+    while(a !== -1){
+        v.push(a);
+        a = prev[a];
     }
-    ret.push(N);
 
-    console.log(ret.reverse().join(' '));
+    console.log(v.reverse().join(' '));
+    
 }
 
 answer();
