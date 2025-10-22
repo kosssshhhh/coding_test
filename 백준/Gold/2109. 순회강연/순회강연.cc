@@ -1,21 +1,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, d, p, sum, ret;
+int n, ret;
+vector<pair<int, int>> v;
 priority_queue<int, vector<int>, greater<int>> pq;
 
 int main() {
   cin >> n;
-  vector<pair<int, int>> v(n);  // <날짜, 돈>
-  for (int i = 0; i < n; i++) cin >> v[i].second >> v[i].first;
+  for (int i = 0; i < n; i++) {
+    int a, b;
+    cin >> a >> b;
+    v.push_back({b, a});
+  }
 
-  sort(v.begin(), v.end());  // 날짜로 정렬
+  // 날짜 오름차순
+  sort(v.begin(), v.end());
 
   for (int i = 0; i < n; i++) {
     pq.push(v[i].second);
-    if (pq.size() > v[i].first) {
-      pq.pop();
-    }
+    if (pq.size() > v[i].first) pq.pop();
   }
 
   while (!pq.empty()) {
@@ -23,9 +26,7 @@ int main() {
     pq.pop();
   }
 
-  cout << ret << '\n';
+  cout << ret;
+
   return 0;
 }
-
-// 그리디, 우선순위 큐, 정렬
-// 최대를 만드는건 최소를 작게하거나, 최대를 크게 하는 것
