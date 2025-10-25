@@ -1,37 +1,31 @@
 const input = require('fs').readFileSync(process.platform === 'linux' ? '/dev/stdin' : './input.txt').toString().trim().split('\n');
 
-const [str, target] = input;
+const [s, target] = input;
 
 function answer(){
-   const stk = [];
+    const stk = [];
 
-   for (const c of str){
-    stk.push(c);
-
-    if(stk.length >= target.length && stk[stk.length - 1] === target[target.length - 1]){
-        let s = "";
-
-        for (let i = 0; i < target.length; i++){
-            s += stk[stk.length - 1];
-            stk.pop();
-        }
-
-        s = s.split('').reverse().join('');
+    for (let i = 0; i < s.length; i++){
+        stk.push(s[i]);
         
-        if(s !== target){
-            for (const c2 of s){
-                stk.push(c2);
+        if(stk.length >= target.length && stk[stk.length - 1] === target[target.length - 1]){
+            let str = '';
+            for (let j = 0; j < target.length; j++){
+                str += stk[stk.length - 1];
+                stk.pop();
+            }
+
+            str = str.split('').reverse().join('');
+
+            if(target !== str){
+                for (let k = 0; k < str.length; k++){
+                    stk.push(str[k]);
+                }
             }
         }
     }
-    
-   }
 
-   if(stk.length){
-    console.log(stk.join(''));
-   }else {
-    console.log("FRULA");
-   }
+    console.log(stk.length ? stk.join('') : 'FRULA');
 }
 
 answer();
